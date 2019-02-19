@@ -18,10 +18,14 @@ app.set('view engine', 'ejs');
 app.use(express.static('./public'));
 app.use(bodyParser.urlencoded({extended: false}));
 
-Blog.create({
-  title: 'Beautiful cat',
-  image: 'https://www.usmagazine.com/wp-content/uploads/2018/06/Smoothie-the-Cat-Instagram-zoom.jpg',
-  body: 'Hello There!'
+// Blog.create({
+//   title: 'Beautiful cat',
+//   image: 'https://www.usmagazine.com/wp-content/uploads/2018/06/Smoothie-the-Cat-Instagram-zoom.jpg',
+//   body: 'This is a very nice cat to look at!'
+// })
+
+app.get('/', (req, res) => {
+  res.redirect('/blogs');
 })
 
 app.get('/blogs', (req, res) => {
@@ -29,7 +33,7 @@ app.get('/blogs', (req, res) => {
     if(err) {
       console.log(err);
     } else {
-      res.render('index', {blogs: allBlogs})
+      res.render('index', {blogs: allBlogs});
     }
   })
 })
