@@ -26,8 +26,28 @@ app.use(bodyParser.urlencoded({extended: false}));
 
 app.get('/', (req, res) => {
   res.redirect('/blogs');
-})
+});
 
+//NEW ROUTE 
+app.get('/blogs/new', (req, res) => {
+  res.render('new');
+});
+
+//CREATE ROUTE
+app.post('/blogs', (req, res) => {
+  //create blog
+  Blog.create(req.body.blog, (err, newBlog) => {
+    if(err) {
+      res.render('new')
+    } else {
+      console.log('successfully created')
+      //redirect to index
+      res.redirect('/blogs')
+    }
+  })
+});
+
+//INDEX ROUTE
 app.get('/blogs', (req, res) => {
   Blog.find({}, (err, allBlogs) => {
     if(err) {

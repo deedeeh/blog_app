@@ -5,3 +5,11 @@ i.icon {
 .header {
   margin-top: 2.2em;
 }
+
+.ui.segment:last-child {
+  margin-top: 4em;
+}
+
+.image {
+  width: 30%;
+}
