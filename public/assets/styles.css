@@ -13,3 +13,21 @@ i.icon {
 .image {
   width: 400px;
 }
+
+.content {
+  margin: 1em 0;
+}
+
+.description {
+  margin: 1em 0;
+}
+
+.show_blog {
+  display: inline;
+}
+
+.delete_form {
+  display: inline;
+  position: absolute;
+  right: 1em;
+}
