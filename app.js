@@ -22,12 +22,6 @@ const blogSchema = new mongoose.Schema({
 
 const Blog = mongoose.model('Blog', blogSchema);
 
-// Blog.create({
-//   title: 'Beautiful cat',
-//   image: 'https://www.usmagazine.com/wp-content/uploads/2018/06/Smoothie-the-Cat-Instagram-zoom.jpg',
-//   body: 'This is a very nice cat to look at!'
-// });
-
 app.get('/', (req, res) => {
   res.redirect('/blogs');
 });
@@ -50,12 +44,9 @@ app.get('/blogs/new', (req, res) => {
 
 //CREATE ROUTE
 app.post('/blogs', (req, res) => {
+  req.body.body = req.sanitize(req.body.body);
   //create blog
   Blog.create(req.body, (err, newBlog) => {
-    console.log(req.body.body);
-    req.body.body = req.sanitize(req.body.body);
-    console.log("============");
-    console.log(req.body.body);
     if(err) {
       res.render('new');
     } else {
@@ -79,7 +70,6 @@ app.get('/blogs/:id', (req, res) => {
 
 //EDIT ROUTE 
 app.get('/blogs/:id/edit', (req, res) => {
-  req.body.body = req.sanitize(req.body.body);
   Blog.findById(req.params.id, (err, foundBlog) => {
     if(err) {
       res.redirect('/blogs');
@@ -91,6 +81,7 @@ app.get('/blogs/:id/edit', (req, res) => {
 
 //UPDATE ROUTE
 app.put('/blogs/:id', (req, res) => {
+  req.body.body = req.sanitize(req.body.body);
   Blog.findByIdAndUpdate(req.params.id, req.body, (err, updatedBlog) => {
     if(err) {
       res.redirect('/blogs');
