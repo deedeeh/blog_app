@@ -82,7 +82,7 @@ app.get('/blogs/:id/edit', (req, res) => {
 //UPDATE ROUTE
 app.put('/blogs/:id', (req, res) => {
   req.body.body = req.sanitize(req.body.body);
-  Blog.findByIdAndUpdate(req.params.id, req.body, (err, updatedBlog) => {
+  Blog.findOneAndUpdate({"_id": req.params.id}, {$set: req.body}, (err, updatedBlog) => {
     if(err) {
       res.redirect('/blogs');
     } else {
@@ -93,7 +93,7 @@ app.put('/blogs/:id', (req, res) => {
 
 //DELETE ROUTE
 app.delete('/blogs/:id', (req, res) => {
-  Blog.findByIdAndRemove(req.params.id, (err) => {
+  Blog.findOneAndDelete({"_id": req.params.id}, (err) => {
     if(err) {
       res.redirect('/blogs');
     } else {
