@@ -1,6 +1,7 @@
 const express = require('express'),
       bodyParser = require('body-parser'),
       methodOverride = require('method-override');
+      expressSanitizer = require('express-sanitizer');
       mongoose = require('mongoose'),
       app = express();
 
@@ -9,6 +10,7 @@ mongoose.connect('mongodb://localhost/blog_app', { useNewUrlParser: true })
 app.set('view engine', 'ejs');
 app.use(express.static('./public'));
 app.use(bodyParser.urlencoded({extended: false}));
+app.use(expressSanitizer());
 app.use(methodOverride("_method"));
 
 const blogSchema = new mongoose.Schema({
@@ -50,6 +52,10 @@ app.get('/blogs/new', (req, res) => {
 app.post('/blogs', (req, res) => {
   //create blog
   Blog.create(req.body, (err, newBlog) => {
+    console.log(req.body.body);
+    req.body.body = req.sanitize(req.body.body);
+    console.log("============");
+    console.log(req.body.body);
     if(err) {
       res.render('new');
     } else {
@@ -73,6 +79,7 @@ app.get('/blogs/:id', (req, res) => {
 
 //EDIT ROUTE 
 app.get('/blogs/:id/edit', (req, res) => {
+  req.body.body = req.sanitize(req.body.body);
   Blog.findById(req.params.id, (err, foundBlog) => {
     if(err) {
       res.redirect('/blogs');

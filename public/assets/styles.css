@@ -31,3 +31,14 @@ i.icon {
   position: absolute;
   right: 1em;
 }
+
+.ui.floated.button {
+  width: 32%;
+  display: flex;
+  align-content: center;
+  align-items: center;
+}
+
+.right.chevron {
+  padding: 4px 0;
+}
